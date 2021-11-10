@@ -19,3 +19,9 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+- script: |
+    echo 'pwd'
+    pwd
+    echo 'ls -ltr'
+    ls -ltr
+  displayName: 'pwd and ls -ltr'
