@@ -26,3 +26,9 @@ steps:
     echo 'ls -ltr'
     ls -ltr
   displayName: 'pwd and ls -ltr'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)'
+    artifactType: 'pipeline'
+    artifactName: 'artifact'
