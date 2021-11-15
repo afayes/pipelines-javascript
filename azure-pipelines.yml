@@ -19,6 +19,7 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)/s'
@@ -39,5 +40,5 @@ steps:
   displayName: 'pwd and ls -ltr'
 
 - script: |
-    ssh -i "$(Pipeline.Workspace)/s/test3.cer" ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com pwd
+    ssh -i "$(caCertificate.secureFilePath)" ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com pwd
   displayName: 'remote commands'
