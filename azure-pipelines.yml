@@ -45,7 +45,7 @@ steps:
 
     ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
     cd /srv
-    echo pwd
+    pwd
     ls -ltr
     EOF
   displayName: 'remote commands'
