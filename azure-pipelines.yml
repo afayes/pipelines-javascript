@@ -41,7 +41,7 @@ steps:
 
 - script: |
     chmod 400 $(caCertificate.secureFilePath)
-    scp -i "$(caCertificate.secureFilePath)" -r '$(Pipeline.Workspace)/s' -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/srv
+    scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r '$(Pipeline.Workspace)/s' ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/srv
 
     ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
     cd /srv
