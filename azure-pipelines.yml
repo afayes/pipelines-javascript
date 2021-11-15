@@ -33,9 +33,12 @@ steps:
     artifactType: 'pipeline'
     artifactName: 'artifact'
 
-
 - task: DownloadSecureFile@1
   name: caCertificate
   displayName: 'Download CA certificate'
   inputs:
     secureFile: 'test3.cer'
+
+- script: |
+    ssh -i "$(Pipeline.Workspace)/s/test3.cer" ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com pwd
+  displayName: 'remote commands'
