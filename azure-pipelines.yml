@@ -32,12 +32,12 @@ steps:
     secureFile: 'test3.cer'
 
 - script: |
-    ssh -i "$(Pipeline.Workspace)/s/test3.cer" ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com pwd
-  displayName: 'remote commands'
-
-- script: |
     echo 'pwd'
     pwd
     echo 'ls -ltr'
     ls -ltr
   displayName: 'pwd and ls -ltr'
+
+- script: |
+    ssh -i "$(Pipeline.Workspace)/s/test3.cer" ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com pwd
+  displayName: 'remote commands'
