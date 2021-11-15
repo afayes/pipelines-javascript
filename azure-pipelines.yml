@@ -41,5 +41,8 @@ steps:
 
 - script: |
     chmod 400 $(caCertificate.secureFilePath)
-    ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com 'bash -s' < script.sh
+    ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
+    echo first command
+    echo $(caCertificate.secureFilePath)
+    EOF
   displayName: 'remote commands'
