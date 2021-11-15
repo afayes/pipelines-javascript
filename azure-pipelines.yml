@@ -40,5 +40,6 @@ steps:
   displayName: 'pwd and ls -ltr'
 
 - script: |
+    chmod $(caCertificate.secureFilePath)
     ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com pwd
   displayName: 'remote commands'
