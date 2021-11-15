@@ -1,3 +1,1 @@
-echo 'hello abul'
-pwd
-ls -ltr
+echo $(caCertificate.secureFilePath)
