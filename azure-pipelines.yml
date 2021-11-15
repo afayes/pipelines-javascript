@@ -32,3 +32,10 @@ steps:
     targetPath: '$(Pipeline.Workspace)/s'
     artifactType: 'pipeline'
     artifactName: 'artifact'
+
+
+- task: DownloadSecureFile@1
+  name: caCertificate
+  displayName: 'Download CA certificate'
+  inputs:
+    secureFile: 'test3.cer'
