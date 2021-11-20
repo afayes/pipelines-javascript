@@ -54,6 +54,6 @@ steps:
     scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/s/* ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/tmp/app
 
     ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
-      sudo cp -r /tmp/* /srv/app
+      sudo cp -r /tmp/app/* /srv/app
     EOF
   displayName: 'remote commands'
