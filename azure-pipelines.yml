@@ -41,10 +41,19 @@ steps:
 
 - script: |
     chmod 400 $(caCertificate.secureFilePath)
-    scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r '$(Pipeline.Workspace)/s/*' ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/tmp/app
 
-#    ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
-#     sudo cp -r /tmp/app /srv
-#     sudo chown ec2-user /srv/app
-#    EOF
+    ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
+      rm -rf /tmp/app
+      rm -rf /srv/app
+
+      mkdir /tmp/app
+      sudo mkdir /srv/app
+      sudo chown ec2-user /srv/app
+    EOF
+
+    scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/s/* ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/tmp/app
+
+    ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
+      sudo cp -r /tmp/* /srv/app
+    EOF
   displayName: 'remote commands'
