@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/home/ec2-user/.nvm/versions/node/v17.1.0/bin/node
 
 'use strict';
 
@@ -17,3 +17,5 @@ app.get('/', (req, res) => {
 var port = process.env.PORT||PORT;
 app.listen(port);
 console.log(`Running on http://${HOST}:${PORT}`);
+
+console.log(`env vars:${JSON.stringify(process.env)}`);
