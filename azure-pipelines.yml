@@ -44,7 +44,7 @@ steps:
 
     ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
       rm -rf /tmp/app
-      rm -rf /srv/app
+      sudo rm -rf /srv/app
 
       mkdir /tmp/app
       sudo mkdir /srv/app
@@ -57,20 +57,28 @@ steps:
       sudo cp -r /tmp/app/* /srv/app
       sudo chown -R ec2-user /srv/app
 
+      echo 'sudo systemctl status myapp'
       sudo systemctl status myapp
 
+      echo 'sudo systemctl stop myapp || true'
       sudo systemctl stop myapp || true
 
+      echo 'systemctl status myapp'
       sudo systemctl status myapp
 
+      echo 'sudo cp /srv/app/myapp.service /etc/systemd/system'
       sudo cp /srv/app/myapp.service /etc/systemd/system
 
+      echo 'sudo systemctl daemon-reload'
       sudo systemctl daemon-reload
 
+      echo 'sudo systemctl enable myapp'
       sudo systemctl enable myapp
 
+      echo 'sudo systemctl start myapp'
       sudo systemctl start myapp
 
+      echo 'sudo systemctl status myapp'
       sudo systemctl status myapp
 
     EOF
