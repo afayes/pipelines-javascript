@@ -1,86 +1,89 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
-- master
+  - master
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js ss'
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '10.x'
+            displayName: 'Install Node.js ss'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+          - script: |
+              npm install
+              npm run build
+            displayName: 'npm install and build'
 
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Pipeline.Workspace)/s'
-    artifactType: 'pipeline'
-    artifactName: 'artifact'
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish artifact'
+            inputs:
+              targetPath: '$(Pipeline.Workspace)/s'
+              artifactType: 'pipeline'
+              artifactName: 'artifact'
+  - stage: Dev
+    jobs:
+      - job: Deploy
+        steps:
+          - task: DownloadSecureFile@1
+            name: caCertificate
+            displayName: 'Download CA certificate'
+            inputs:
+              secureFile: 'test3.cer'
 
-- task: DownloadSecureFile@1
-  name: caCertificate
-  displayName: 'Download CA certificate'
-  inputs:
-    secureFile: 'test3.cer'
+          - script: |
+              echo 'pwd'
+              pwd
+              echo 'ls -ltr'
+              ls -ltr
+            displayName: 'pwd and ls -ltr'
 
-- script: |
-    echo 'pwd'
-    pwd
-    echo 'ls -ltr'
-    ls -ltr
-  displayName: 'pwd and ls -ltr'
+          - script: |
+              chmod 400 $(caCertificate.secureFilePath)
 
-- script: |
-    chmod 400 $(caCertificate.secureFilePath)
+              ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
+                rm -rf /tmp/app
+                sudo rm -rf /srv/app
 
-    ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
-      rm -rf /tmp/app
-      sudo rm -rf /srv/app
+                mkdir /tmp/app
+                sudo mkdir /srv/app
+                sudo chown ec2-user /srv/app
+              EOF
 
-      mkdir /tmp/app
-      sudo mkdir /srv/app
-      sudo chown ec2-user /srv/app
-    EOF
+              scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/s/* ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/tmp/app
 
-    scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/s/* ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/tmp/app
+              ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
+                sudo cp -r /tmp/app/* /srv/app
+                sudo chown -R ec2-user /srv/app
+                chmod u+x /srv/app/server.js
 
-    ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
-      sudo cp -r /tmp/app/* /srv/app
-      sudo chown -R ec2-user /srv/app
-      chmod u+x /srv/app/server.js
+                echo 'sudo systemctl status myapp'
+                sudo systemctl status myapp
 
-      echo 'sudo systemctl status myapp'
-      sudo systemctl status myapp
+                echo 'sudo systemctl stop myapp || true'
+                sudo systemctl stop myapp || true
 
-      echo 'sudo systemctl stop myapp || true'
-      sudo systemctl stop myapp || true
+                echo 'systemctl status myapp'
+                sudo systemctl status myapp
 
-      echo 'systemctl status myapp'
-      sudo systemctl status myapp
+                echo 'sudo cp /srv/app/myapp.service /etc/systemd/system'
+                sudo cp /srv/app/myapp.service /etc/systemd/system
 
-      echo 'sudo cp /srv/app/myapp.service /etc/systemd/system'
-      sudo cp /srv/app/myapp.service /etc/systemd/system
+                echo 'sudo systemctl daemon-reload'
+                sudo systemctl daemon-reload
 
-      echo 'sudo systemctl daemon-reload'
-      sudo systemctl daemon-reload
+                echo 'sudo systemctl enable myapp'
+                sudo systemctl enable myapp
 
-      echo 'sudo systemctl enable myapp'
-      sudo systemctl enable myapp
+                echo 'sudo systemctl start myapp'
+                sudo systemctl start myapp
 
-      echo 'sudo systemctl start myapp'
-      sudo systemctl start myapp
+                echo 'sudo systemctl status myapp'
+                sudo systemctl status myapp
 
-      echo 'sudo systemctl status myapp'
-      sudo systemctl status myapp
-
-    EOF
-  displayName: 'remote commands'
+              EOF
+            displayName: 'remote commands'

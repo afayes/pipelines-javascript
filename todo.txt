@@ -1,12 +1,13 @@
 - todo
-    - how to deploy new version of myapp service when it changes - test with server2.js
-    - make files copying to dest faster
-        - try single zip or rsync
-    - don't copy some files/folders to remote .git
     - deployment options
         - using script block
+            - stages for build and deploy to dev and prod
         - using env and deployment block - check dl code
         - using release pipeline - check tutorial https://skundunotes.com/2020/09/10/azuredevops-to-ec2-instance-in-4-steps/
+    - other
+        - make files copying to dest faster
+        - try single zip or rsync
+        - don't copy some files/folders to remote .git
 
 - web app location: https://serverfault.com/questions/144598/where-should-the-web-server-root-directory-go-in-linux
 - service creation link: https://stackoverflow.com/questions/4018154/how-do-i-run-a-node-js-app-as-a-background-service
