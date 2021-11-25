@@ -1,7 +1,9 @@
 - todo
     - deployment options
         - using script block
-            - stages for build and deploy to dev and prod
+            - stage for prod
+            - make prod a manual step
+            - only publish artifact with app files
         - using env and deployment block - check dl code
         - using release pipeline - check tutorial https://skundunotes.com/2020/09/10/azuredevops-to-ec2-instance-in-4-steps/
     - other

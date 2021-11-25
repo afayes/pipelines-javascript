@@ -13,12 +13,13 @@ provider "aws" {
 }
 
 resource "aws_instance" "app_server" {
+  for_each = local.envs
+
   ami           = "ami-0fc15d50d39e4503c"
   instance_type = "t2.micro"
   key_name = "test3"
 
   tags = {
-    Name = var.instance_name
+    Name = each.key
   }
 }
-
