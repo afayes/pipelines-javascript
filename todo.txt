@@ -11,3 +11,7 @@
 - web app location: https://serverfault.com/questions/144598/where-should-the-web-server-root-directory-go-in-linux
 - service creation link: https://stackoverflow.com/questions/4018154/how-do-i-run-a-node-js-app-as-a-background-service
 - service link2: https://askubuntu.com/questions/891050/failed-to-start-myapp-service-unit-myapp-service-not-found
+
+
+commands:
+journalctl -ru myapp
