@@ -48,7 +48,7 @@ stages:
           - script: |
               chmod 400 $(caCertificate.secureFilePath)
 
-              ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
+              ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-52.56.187.118.eu-west-2.compute.amazonaws.com bash <<EOF
                 rm -rf /tmp/app
                 sudo rm -rf /srv/app
 
@@ -57,7 +57,7 @@ stages:
                 sudo chown ec2-user /srv/app
               EOF
 
-              scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/app/* ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/tmp/app
+              scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/app/* ec2-user@ec2-52.56.187.118.eu-west-2.compute.amazonaws.com:/tmp/app
 
               ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-52.56.187.118".eu-west-2.compute.amazonaws.com bash <<EOF
                 sudo cp -r /tmp/app/* /srv/app
@@ -122,7 +122,7 @@ stages:
                 sudo chown ec2-user /srv/app
               EOF
 
-              scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/app/* ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/tmp/app
+              scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/app/* ec2-user@ec2-13.40.19.71.eu-west-2.compute.amazonaws.com:/tmp/app
 
               ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-52.56.187.118".eu-west-2.compute.amazonaws.com bash <<EOF
                 sudo cp -r /tmp/app/* /srv/app
