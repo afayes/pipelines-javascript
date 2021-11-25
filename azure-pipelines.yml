@@ -114,6 +114,11 @@ stages:
               chmod 400 $(caCertificate.secureFilePath)
 
               ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-13-40-19-71.eu-west-2.compute.amazonaws.com bash <<EOF
+                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+                . ~/.nvm/nvm.sh
+                nvm install node
+                node -v
+
                 rm -rf /tmp/app
                 sudo rm -rf /srv/app
 
@@ -151,7 +156,7 @@ stages:
                 sudo systemctl start myapp
 
                 echo 'sudo systemctl status myapp'
-                sudo systemctl status myapp
+                journalctl -n 10 -ru myapp
 
               EOF
             displayName: 'remote commands'
