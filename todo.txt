@@ -15,4 +15,4 @@
 
 
 commands:
-journalctl -ru myapp
+journalctl -n 10 -ru myapp

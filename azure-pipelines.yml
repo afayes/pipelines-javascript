@@ -24,7 +24,7 @@ stages:
             inputs:
               targetPath: '$(Pipeline.Workspace)/s'
               artifactType: 'pipeline'
-              artifactName: 'artifact'
+              artifactName: 'app'
   - stage: Dev
     jobs:
       - job: Deploy
@@ -34,12 +34,15 @@ stages:
             displayName: 'Download CA certificate'
             inputs:
               secureFile: 'test3.cer'
-
+          - download: current
+            artifact: app
           - script: |
               echo 'pwd'
               pwd
               echo 'ls -ltr'
               ls -ltr
+              echo 'ls  $(Pipeline.Workspace)'
+              ls -l  $(Pipeline.Workspace)
             displayName: 'pwd and ls -ltr'
 
           - script: |
@@ -54,7 +57,7 @@ stages:
                 sudo chown ec2-user /srv/app
               EOF
 
-              scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/s/* ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/tmp/app
+              scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/app/* ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com:/tmp/app
 
               ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com bash <<EOF
                 sudo cp -r /tmp/app/* /srv/app
