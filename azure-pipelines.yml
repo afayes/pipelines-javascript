@@ -29,4 +29,4 @@ stages:
     jobs:
       - template: ci-cd/deploy.yml
         parameters:
-          host: 'ec2-user@ec2-3-8-85-161.eu-west-2.compute.amazonaws.com'
+          host: 'ec2-user@ec2-52-56-187-118.eu-west-2.compute.amazonaws.com'
