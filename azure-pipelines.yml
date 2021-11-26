@@ -49,6 +49,11 @@ stages:
               chmod 400 $(caCertificate.secureFilePath)
 
               ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ec2-user@ec2-52-56-187-118.eu-west-2.compute.amazonaws.com bash <<EOF
+                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+                . ~/.nvm/nvm.sh
+                nvm install node
+                node -v
+
                 rm -rf /tmp/app
                 sudo rm -rf /srv/app
 
