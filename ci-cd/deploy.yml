@@ -13,6 +13,8 @@ jobs:
       - download: current
         artifact: app
       - script: |
+          echo 'parameters.host'
+          echo ${{ parameters.host }}
           echo 'pwd'
           pwd
           echo 'ls -ltr'
