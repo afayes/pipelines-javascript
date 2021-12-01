@@ -3,6 +3,16 @@ parameters:
     type: string
 
 jobs:
+  - deployment: Deploy
+      displayName: Deploy
+      pool:
+        vmImage: 'Ubuntu-latest'
+      environment: 'dev'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - script: echo my first deployment
   - job: Deploy
     steps:
       - task: DownloadSecureFile@1

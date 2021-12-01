@@ -1,7 +1,6 @@
 - todo
     - deployment options
         - using script block
-            - stage for prod
             - make prod a manual step
             - only publish artifact with app files
         - using env and deployment block - check dl code
