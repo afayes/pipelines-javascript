@@ -3,8 +3,8 @@ parameters:
     type: string
 
 jobs:
-  - deployment: Deploy dev
-    displayName: Deploy dev
+  - deployment: Deploy_dev
+    displayName: Deploy_dev
     pool:
       vmImage: 'Ubuntu-latest'
     environment: 'dev'
