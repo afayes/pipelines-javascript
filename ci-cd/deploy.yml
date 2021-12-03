@@ -14,8 +14,6 @@ jobs:
               displayName: 'Download CA certificate'
               inputs:
                 secureFile: 'test3.cer'
-            - download: current
-              artifact: app
             - script: |
                 echo 'parameters.host'
                 echo ${{ parameters.host }}

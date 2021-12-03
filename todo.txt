@@ -1,9 +1,12 @@
 - todo
     - deployment options
+        - using env and deployment block - check dl code
+            - pass in env
+            - run for both dev and prod
         - using script block
             - make prod a manual step
             - only publish artifact with app files
-        - using env and deployment block - check dl code
+
         - using release pipeline - check tutorial https://skundunotes.com/2020/09/10/azuredevops-to-ec2-instance-in-4-steps/
     - other
         - make files copying to dest faster
