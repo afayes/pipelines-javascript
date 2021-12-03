@@ -5,8 +5,8 @@ parameters:
 jobs:
   - deployment: Deploy_dev
     displayName: Deploy_dev
-#    pool:
-#      vmImage: 'Ubuntu-latest'
+    pool:
+      vmImage: 'Ubuntu-latest'
     environment: 'dev'
     strategy:
       runOnce:
