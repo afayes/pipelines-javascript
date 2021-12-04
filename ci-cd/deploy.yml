@@ -1,10 +1,12 @@
 parameters:
   - name: host
     type: string
+  - name: env
+    type: string
 
 jobs:
   - deployment: Deploy
-    environment: 'dev'
+    environment: ${{ parameters.env }}
     strategy:
       runOnce:
         deploy:
