@@ -8,7 +8,7 @@ jobs:
   - deployment: Deploy
     environment:
      name: ${{ parameters.env }}
-    resourceType: VirtualMachine
+     resourceType: VirtualMachine
     strategy:
       runOnce:
         deploy:
