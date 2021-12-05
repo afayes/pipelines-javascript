@@ -31,9 +31,9 @@ stages:
         parameters:
           host: 'ec2-user@ec2-52-56-187-118.eu-west-2.compute.amazonaws.com'
           env: dev
-#  - stage: Prod
-#    jobs:
-#      - template: ci-cd/deploy.yml
-#        parameters:
-#          host: 'ec2-user@ec2-13-40-19-71.eu-west-2.compute.amazonaws.com'
-#          env: prod
+  - stage: Prod
+    jobs:
+      - template: ci-cd/deploy.yml
+        parameters:
+          host: 'ec2-user@ec2-13-40-19-71.eu-west-2.compute.amazonaws.com'
+          env: prod

@@ -6,74 +6,17 @@ parameters:
 
 jobs:
   - deployment: Deploy
-    environment: ${{ parameters.env }}
+    environment:
+     name: ${{ parameters.env }}
+    resourceType: VirtualMachine
     strategy:
       runOnce:
         deploy:
           steps:
-            - task: DownloadSecureFile@1
-              name: caCertificate
-              displayName: 'Download CA certificate'
-              inputs:
-                secureFile: 'test3.cer'
             - script: |
-                echo 'parameters.host'
-                echo ${{ parameters.host }}
                 echo 'pwd'
                 pwd
+
                 echo 'ls -ltr'
                 ls -ltr
-                echo 'ls  $(Pipeline.Workspace)'
-                ls -l  $(Pipeline.Workspace)
-              displayName: 'pwd and ls -ltr'
-
-            - script: |
-                chmod 400 $(caCertificate.secureFilePath)
-
-                ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ${{ parameters.host }} bash <<EOF
-                  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-                  . ~/.nvm/nvm.sh
-                  nvm install node
-                  node -v
-
-                  rm -rf /tmp/app
-                  sudo rm -rf /srv/app
-
-                  mkdir /tmp/app
-                  sudo mkdir /srv/app
-                  sudo chown ec2-user /srv/app
-                EOF
-
-                scp -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no -r $(Pipeline.Workspace)/app/* ${{ parameters.host }}:/tmp/app
-
-                ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ${{ parameters.host }} bash <<EOF
-                  sudo cp -r /tmp/app/* /srv/app
-                  sudo chown -R ec2-user /srv/app
-                  chmod u+x /srv/app/server.js
-
-                  echo 'sudo systemctl status myapp'
-                  sudo systemctl status myapp
-
-                  echo 'sudo systemctl stop myapp || true'
-                  sudo systemctl stop myapp || true
-
-                  echo 'systemctl status myapp'
-                  sudo systemctl status myapp
-
-                  echo 'sudo cp /srv/app/myapp.service /etc/systemd/system'
-                  sudo cp /srv/app/myapp.service /etc/systemd/system
-
-                  echo 'sudo systemctl daemon-reload'
-                  sudo systemctl daemon-reload
-
-                  echo 'sudo systemctl enable myapp'
-                  sudo systemctl enable myapp
-
-                  echo 'sudo systemctl start myapp'
-                  sudo systemctl start myapp
-
-                  echo 'sudo systemctl status myapp'
-                  journalctl -n 10 -ru myapp
-
-                EOF
               displayName: 'remote commands'
