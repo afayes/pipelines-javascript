@@ -6,6 +6,7 @@ parameters:
 
 jobs:
   - deployment: Dep_x
+    displayName: Deploy
     environment:
       name: ${{ parameters.env }}
       resourceType: VirtualMachine
