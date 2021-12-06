@@ -23,6 +23,11 @@ jobs:
                 ls -l  $(Pipeline.Workspace)
               displayName: 'pwd and ls -ltr'
             - script: |
+                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+                . ~/.nvm/nvm.sh
+                nvm install node
+                node -v
+
                 rm -rf /tmp/app
                 sudo rm -rf /srv/app
 
@@ -59,6 +64,4 @@ jobs:
 
                 echo 'sudo systemctl status myapp'
                 journalctl -n 10 -ru myapp
-
-                EOF
               displayName: 'start app'
