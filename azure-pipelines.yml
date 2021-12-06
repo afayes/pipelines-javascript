@@ -27,7 +27,7 @@ stages:
               artifactName: 'app'
   - stage: Dev
     jobs:
-      - template: ci-cd/deploy.yml
+      - template: ci-cd/deploy-env.yml
         parameters:
           host: 'ec2-user@ec2-52-56-187-118.eu-west-2.compute.amazonaws.com'
           env: dev
