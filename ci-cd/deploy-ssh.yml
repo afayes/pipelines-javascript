@@ -33,6 +33,7 @@ jobs:
                 ssh -i "$(caCertificate.secureFilePath)" -o StrictHostKeyChecking=no ${{ parameters.host }} bash <<EOF
                   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
                   . ~/.nvm/nvm.sh
+
                   nvm install 17.1.0
                   node -v
 
