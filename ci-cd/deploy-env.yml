@@ -5,7 +5,7 @@ parameters:
     type: string
 
 jobs:
-  - deployment: Dep_x
+  - deployment: Deploy_
     displayName: Deploy
     environment:
       name: ${{ parameters.env }}

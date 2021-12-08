@@ -1,14 +1,22 @@
 trigger:
   - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+pool: Test
+#  vmImage: 'ubuntu-latest'
 
 stages:
   - stage: Build
     jobs:
       - job: Build
         steps:
+          - script: |
+              echo 'pwd'
+              pwd
+
+              echo 'ls -ltra'
+              ls -ltra
+
+              displayName: 'pwd and ls'
           - task: NodeTool@0
             inputs:
               versionSpec: '10.x'

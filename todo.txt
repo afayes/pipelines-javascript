@@ -1,5 +1,7 @@
 - todo
+    - use own agent
     - other
+        - check does dev deployment leave files from old build
         - add ec2 to env
         - check DL pipeline deployment code
         - make files copying to dest faster
