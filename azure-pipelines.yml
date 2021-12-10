@@ -16,7 +16,7 @@ stages:
               echo 'ls -ltra'
               ls -ltra
 
-              displayName: 'pwd and ls'
+            displayName: 'pwd and ls'
           - task: NodeTool@0
             inputs:
               versionSpec: '10.x'
