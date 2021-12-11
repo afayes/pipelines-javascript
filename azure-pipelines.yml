@@ -1,8 +1,9 @@
 trigger:
   - master
 
-pool: Test
-#  vmImage: 'ubuntu-latest'
+#pool: Test
+pool:
+  vmImage: 'ubuntu-latest'
 
 stages:
   - stage: Build
